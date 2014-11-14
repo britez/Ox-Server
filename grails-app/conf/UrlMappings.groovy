@@ -6,6 +6,14 @@ class UrlMappings {
 			action = [GET: "show"]
 		}
 		
+		"/me/projects" (controller: "project") {
+			action = [POST: "create",GET: "list"]
+		}
+		
+		"/me/projects/$id" (controller: "project") {
+			action = [GET: "get"]
+		}
+		
 		
         "/"(view:"/index")
         "500"(view:'/error')

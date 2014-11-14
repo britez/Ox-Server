@@ -1,31 +1,45 @@
 package com.ox.api
 
+import static groovyx.net.http.ContentType.*
+import static groovyx.net.http.Method.*
 import grails.transaction.Transactional
 import groovyx.net.http.HTTPBuilder
-import static groovyx.net.http.Method.GET
+
+import com.ox.User
+import com.ox.api.exception.TokenExpiredException
+import com.ox.api.exception.UserNotFoundException
 
 @Transactional
 class UserService {
 	
-	def oauth = new HTTPBuilder()
-
+	def tokenService
+	
+	def create(User user){
+		if(!user.projects){
+			user.projects = []
+		}
+		if(!(user.save(flush:true))){
+			println user.errors
+		}
+		user
+	}
+	
+	private User getByMail(String mail){
+		def storedUser = User.executeQuery("from User as u where u.mail = '$mail'")[0]
+		if(!storedUser){
+			throw new UserNotFoundException()
+		}
+		storedUser
+	}
+	
     def get(String accessToken) {
-		
-		oauth.request("http://localhost:9090", GET) { req ->
-			uri.path = '/Ox-Oauth/token'
-			headers.'Authorization' = "Bearer $accessToken"
-		   
-			response.success = { resp, reader ->
-				assert resp.statusLine.statusCode == 200
-				println "Got response: ${resp.statusLine}"
-				println "Content-Type: ${resp.headers.'Content-Type'}"
-				println reader.text
-			}
-		   
-			response.'403' = {
-				println 'Forbidden'
-			}
-		  }
-		
+		User result
+		User authUser = tokenService.getUser(accessToken)
+		try {
+			result = this.getByMail(authUser.mail)
+		} catch (UserNotFoundException e) {
+			result = this.create(authUser)
+		}
+		result
     }
 }

@@ -1,7 +1,10 @@
 package com.ox.api
 
+import grails.converters.JSON;
+
 import com.ox.User
-import com.ox.api.exception.InvalidTokenException;
+import com.ox.api.exception.InvalidTokenException
+import com.ox.api.exception.TokenExpiredException
 
 class UserController {
 	
@@ -13,13 +16,15 @@ class UserController {
     def show() {
 		def token = null
 		try {
-			token = tokenService.getToken(request.getHeader(AUTHORIZATION))
+			render userService.get(tokenService.getToken(request.getHeader(AUTHORIZATION))) as JSON
+			//render(contentType: 'text/json', text: result as JSON)
+			return
 		} catch (InvalidTokenException e){
-			render(status: 400, text: "{message: 'Invalid token'}")
+			render(status: 400, text: "{'message': 'Invalid token'}")
+			return
+		} catch (TokenExpiredException e){
+			render(status: 403, text: "{'message': 'Forbidden'}")
 			return
 		}
-		def User user = userService.get(token)
-		render(status: 200, text: "Token $token")
-		return
 	}
 }

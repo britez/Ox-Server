@@ -1,7 +1,12 @@
 package com.ox
 
 class Project {
-
-    static constraints = {
-    }
+	
+	String name
+	String description
+	
+	static hasMany = [stages: Stage]
+	static belongsTo = [owner: User]
+	
+	static constraints = {}
 }
