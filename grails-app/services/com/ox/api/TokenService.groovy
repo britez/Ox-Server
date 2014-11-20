@@ -11,6 +11,8 @@ import com.ox.api.exception.TokenExpiredException
 
 @Transactional
 class TokenService {
+	
+	def grailsApplication
 
     def getToken(def header) {
 		if (!header){
@@ -21,8 +23,8 @@ class TokenService {
 	
 	def getUser(def token){
 		def http = new HTTPBuilder()
-		http.request("http://localhost:8090", GET, TEXT ) { req ->
-			uri.path = '/Ox-Oauth/token'
+		http.request("$grailsApplication.config.grails.oauth.base", GET, TEXT ) { req ->
+			uri.path = "$grailsApplication.config.grails.oauth.context/token"
 			headers.'Authorization' = "Bearer $token"
 			headers.'Content-Type'= 'application/json'
 		

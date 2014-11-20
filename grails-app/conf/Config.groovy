@@ -89,10 +89,14 @@ environments {
     development {
         grails.logging.jul.usebridge = true
 		grails.serverURL = "http://localhost:8080/Ox-Server"
+		grails.oauth.base = "http://localhost:8090"
+		grails.oauth.context = "/Ox-Oauth"
     }
     production {
         grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
+        grails.serverURL = "https://ox-server.herokuapp.com/"
+		grails.oauth.base = "https://ox-oauth.herokuapp.com/"
+		grails.oauth.context = ""
     }
 }
 
