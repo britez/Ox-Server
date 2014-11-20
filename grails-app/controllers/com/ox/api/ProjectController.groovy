@@ -11,6 +11,7 @@ class ProjectController {
 	def tokenService
 	def userService
 	def projectService
+	def grailsApplication
 	
 	private static final String AUTHORIZATION_HEADER = "Authorization"
 
@@ -26,7 +27,7 @@ class ProjectController {
 			render(status: 403, text: "{'message': 'Forbidden'}")
 			return
 		}
-		response.setHeader("Location","http://localhost:8080/Ox-Server/me/project/${project.id}")
+		response.setHeader("Location","$grailsApplication.config.grails.serverURL/me/project/${project.id}")
 		render (status: 201)
 	}
 	

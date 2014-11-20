@@ -88,6 +88,7 @@ grails.hibernate.osiv.readonly = false
 environments {
     development {
         grails.logging.jul.usebridge = true
+		grails.serverURL = "http://localhost:8080/Ox-Server"
     }
     production {
         grails.logging.jul.usebridge = false

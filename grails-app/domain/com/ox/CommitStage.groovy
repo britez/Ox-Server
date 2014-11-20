@@ -2,7 +2,10 @@ package com.ox
 
 class CommitStage extends Stage{
 	
-	String gitUrl
-
-    static constraints = {}
+	static hasOne = [gitInfo: Git]
+	static belongsTo = [owner: Project]
+	
+    static constraints = {
+		gitInfo nullable: true
+	}
 }

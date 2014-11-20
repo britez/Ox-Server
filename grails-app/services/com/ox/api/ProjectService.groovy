@@ -7,11 +7,20 @@ import com.ox.User
 
 @Transactional
 class ProjectService {
-
+	
+	def jobService
+	
     def create(User user, def project) {
 		project.owner = user
 		user.projects << project
-		project.save(flush:true)
+		if (!project.stages){
+			project.stages = []
+		}
+		//TODO: Implementar la creación en jenkins
+		//project.stages << this.jobService.createCommitStage(project)
+		if(!(project.save(flush:true))){
+			println project.errors
+		}
 		project
     }
 	
