@@ -11,7 +11,7 @@ class UrlMappings {
 		}
 		
 		"/me/projects/$id" (controller: "project") {
-			action = [GET: "get"]
+			action = [GET: "get", DELETE: "delete"]
 		}
 		
 		

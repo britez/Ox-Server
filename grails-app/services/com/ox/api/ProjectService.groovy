@@ -4,6 +4,7 @@ import grails.transaction.Transactional
 
 import com.ox.Project
 import com.ox.User
+import com.ox.api.exception.ProjectNotFoundException
 
 @Transactional
 class ProjectService {
@@ -29,6 +30,14 @@ class ProjectService {
 	}
 	
 	def get(Long userId, Long id){
-		Project.executeQuery("from Project as project where project.id = $id and project.owner.id = $userId")[0]
+		def result = Project.executeQuery("from Project as project where project.id = $id and project.owner.id = $userId")[0]
+		if(!result){
+			throw new ProjectNotFoundException(id:id)
+		}
+		result
+	}
+	
+	def delete(Long userId, Long id){
+		Project.executeUpdate("delete Project as project where project.id = $id and project.owner.id = $userId")
 	}
 }
