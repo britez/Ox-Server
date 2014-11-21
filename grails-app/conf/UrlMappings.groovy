@@ -14,6 +14,13 @@ class UrlMappings {
 			action = [GET: "get", DELETE: "delete"]
 		}
 		
+		"/me/projects/$id/stages" (controller: "stage") {
+			action = [POST: "create", GET: "list"]
+		}
+		
+		"/me/projects/$id/stages/$stageId" (controller: "stage") {
+			action = [GET: "get"]
+		}
 		
         "/"(view:"/index")
 	}

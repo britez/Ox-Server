@@ -8,4 +8,9 @@ class CommitStage extends Stage{
     static constraints = {
 		gitInfo nullable: true
 	}
+	
+	@Override
+	String getType(){
+		StageType.COMMIT_STAGE
+	}
 }

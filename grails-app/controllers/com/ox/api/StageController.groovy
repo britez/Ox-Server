@@ -3,34 +3,26 @@ package com.ox.api
 import grails.converters.JSON
 
 import com.ox.CommitStage
+import com.ox.Project
 import com.ox.Stage
+import com.ox.StageType
 import com.ox.api.exception.InvalidTokenException
 import com.ox.api.exception.TokenExpiredException
 
-class StageController {
+class StageController extends ProjectController{
 	
-	def userService
-	def projectService
-	def tokenService
 	def stageService
+	def stageBuilder
 	
-	private static final String AUTHORIZATION_HEADER = "Authorization"
-
-    def update(String projectId, String stageId) {
-		Stage result
-		try {
-			def user = userService.get(tokenService.getToken(request.getHeader(AUTHORIZATION_HEADER)))
-			def project = projectService.get(user.id, projectId)
-			def stage = new CommitStage(JSON.parse(request))
-			stage.id = stageId
-			stageService.update(project.id, stage)
-		} catch (InvalidTokenException e){
-			render(status: 400, text: "{'message': 'Invalid token'}")
-			return
-		} catch (TokenExpiredException e){
-			render(status: 403, text: "{'message': 'Forbidden'}")
-			return
-		}
-		render result as JSON
+	def list(Long id){ render stageService.list(getProject(getUser().id, id).id) as JSON }
+	
+	def create(Long id){
+		def stage = stageService.create(getProject(getUser().id, id), stageBuilder.create(request))
+		response.setHeader("Location","$grailsApplication.config.grails.serverURL/me/project/${id}/stages/$stage.id")
+		render (status: 201)
+	}
+	
+	def get(Long id, Long stageId){
+		render stageService.get(getProject(getUser().id, id).id, stageId) as JSON
 	}
 }

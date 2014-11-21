@@ -6,7 +6,7 @@ import com.ox.Stage
 
 class StageMarshaller {
 	
-	private static final String LIST_URL="/me/projects/%s/stages"
+	protected static final String LIST_URL="/me/projects/%s/stages"
 	
 	def grailsApplication
 	

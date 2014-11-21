@@ -1,14 +1,21 @@
+import com.ox.StageBuilder
+import com.ox.api.marshaller.CommitStageMarshaller
 import com.ox.api.marshaller.CustomMarshallers
-import com.ox.api.marshaller.ProjectMarshaller;
-import com.ox.api.marshaller.StageMarshaller;
+import com.ox.api.marshaller.GitInfoMarshaller;
+import com.ox.api.marshaller.ProjectMarshaller
 import com.ox.api.marshaller.UserMarshaller
 
 // Place your Spring DSL code here
 beans = {
+	
+	stageBuilder(StageBuilder)
+	
 	customMarshallers(CustomMarshallers) {
 		marshallers = [
 			ref('userMarshaller'),
-			ref('projectMarshaller')
+			ref('projectMarshaller'),
+			ref('commitStageMarshaller'),
+			ref('gitMarshaller')
 		]
 	}
 	
@@ -18,10 +25,12 @@ beans = {
 	
 	projectMarshaller(ProjectMarshaller){
 		grailsApplication = ref('grailsApplication')
-		stageMarshaller = ref('stageMarshaller')
+		stageMarshaller = ref('commitStageMarshaller')
 	}
 	
-	stageMarshaller(StageMarshaller){
+	commitStageMarshaller(CommitStageMarshaller){
 		grailsApplication = ref('grailsApplication')
 	}
+	
+	gitMarshaller(GitInfoMarshaller)
 }
