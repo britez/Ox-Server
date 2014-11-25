@@ -13,7 +13,7 @@ class ProjectController extends UserController{
 	
     def create() {
 		Project project = projectService.create(getUser(),new Project(JSON.parse(request)))
-		response.setHeader("Location","$grailsApplication.config.grails.serverURL/me/project/${project.id}")
+		response.setHeader("Location","$grailsApplication.config.grails.serverURL/me/projects/${project.id}")
 		render (status: 201)
 	}
 	

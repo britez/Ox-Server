@@ -15,7 +15,10 @@ class UserController {
 	def userService
 	def tokenService
 	
-    def show() { render getUser() as JSON }
+    def show() { 
+		def user = getUser()
+		render user as JSON 
+	}
 	
 	def invalidTokenException(final InvalidTokenException e){
 		render(status: 400, contentType:"application/json"){
@@ -30,6 +33,7 @@ class UserController {
 	}
 	
 	protected User getUser(){
-		return userService.get(tokenService.getToken(request.getHeader(AUTHORIZATION)))
+		String token = tokenService.getToken(request.getHeader(AUTHORIZATION))
+		return userService.get(token)
 	}
 }
