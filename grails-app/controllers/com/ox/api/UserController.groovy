@@ -16,12 +16,6 @@ class UserController {
 	def userService
 	def tokenService
 	
-	static responseFormats = ['hal','json']
-
-	UserController() {
-		super(User)
-	}
-	
     def show() { 
 		def user = getUser()
 		render user as JSON 

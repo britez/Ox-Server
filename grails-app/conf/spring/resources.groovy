@@ -6,9 +6,6 @@ import com.ox.api.marshaller.GitInfoMarshaller;
 import com.ox.api.marshaller.ProjectMarshaller
 import com.ox.api.marshaller.UserMarshaller
 
-import grails.rest.render.hal.HalJsonCollectionRenderer
-import grails.rest.render.hal.HalJsonRenderer
-
 // Place your Spring DSL code here
 beans = {
 	
