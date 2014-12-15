@@ -1,9 +1,13 @@
 import com.ox.StageBuilder
+import com.ox.User;
 import com.ox.api.marshaller.CommitStageMarshaller
 import com.ox.api.marshaller.CustomMarshallers
 import com.ox.api.marshaller.GitInfoMarshaller;
 import com.ox.api.marshaller.ProjectMarshaller
 import com.ox.api.marshaller.UserMarshaller
+
+import grails.rest.render.hal.HalJsonCollectionRenderer
+import grails.rest.render.hal.HalJsonRenderer
 
 // Place your Spring DSL code here
 beans = {
@@ -33,4 +37,9 @@ beans = {
 	}
 	
 	gitMarshaller(GitInfoMarshaller)
+	
+	/* Swagger */
+	halPCollectionRenderer(HalJsonCollectionRenderer, User)
+
+	halPRenderer(HalJsonRenderer, User)
 }
