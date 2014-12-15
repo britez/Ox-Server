@@ -1,8 +1,6 @@
 package com.ox.api
 
 import grails.converters.JSON
-import restapidoc.DocumentedRestfulController
-import restapidoc.annotations.ApiDescription
 
 import com.ox.User
 import com.ox.api.exception.InvalidTokenException
@@ -10,18 +8,14 @@ import com.ox.api.exception.TokenExpiredException
 import com.ox.api.response.ResponseBody
 
 
-@ApiDescription(description = "User controller")
-class UserController extends DocumentedRestfulController {
+class UserController {
 	
 	protected static final String AUTHORIZATION = "Authorization"
 			
-	//def grailsApplication
+	def grailsApplication
 	def userService
 	def tokenService
 	
-	def halPCollectionRenderer
-	def halPRenderer
-
 	static responseFormats = ['hal','json']
 
 	UserController() {

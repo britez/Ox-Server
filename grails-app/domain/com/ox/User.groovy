@@ -1,12 +1,7 @@
 package com.ox
 
-import restapidoc.annotations.ApiDescription
-import restapidoc.annotations.ApiProperty
-
-@ApiDescription(description = "A user representation")
 class User {
 	
-	@ApiProperty(description = "A Name")
 	String mail
     static hasMany = [projects: Project]
 	static mapping = {

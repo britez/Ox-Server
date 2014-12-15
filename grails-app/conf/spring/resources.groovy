@@ -37,9 +37,4 @@ beans = {
 	}
 	
 	gitMarshaller(GitInfoMarshaller)
-	
-	/* Swagger */
-	halPCollectionRenderer(HalJsonCollectionRenderer, User)
-
-	halPRenderer(HalJsonRenderer, User)
 }
