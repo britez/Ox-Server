@@ -2,12 +2,8 @@ package com.ox.api
 
 import grails.converters.JSON
 
-import com.ox.CommitStage
-import com.ox.Project
-import com.ox.Stage
-import com.ox.StageType
-import com.ox.api.exception.InvalidTokenException
-import com.ox.api.exception.TokenExpiredException
+import com.ox.api.exception.StageNotFoundException
+import com.ox.api.response.ResponseBody
 
 class StageController extends ProjectController{
 	
@@ -23,6 +19,13 @@ class StageController extends ProjectController{
 	}
 	
 	def get(Long id, Long stageId){
-		render stageService.get(getProject(getUser().id, id).id, stageId) as JSON
+		def result = stageService.get(getProject(getUser().id, id).id, stageId)
+		render result as JSON
+	}
+	
+	def stageNotFoundException(final StageNotFoundException e){
+		render(status:404, contentType:"application/json"){
+			new ResponseBody(message: "Stage with id: $e.id not found")
+		}
 	}
 }

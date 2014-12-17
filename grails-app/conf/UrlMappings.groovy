@@ -1,11 +1,6 @@
 class UrlMappings {
 
 	static mappings = {
-		"/$controller/$action?/$id?(.$format)?"{
-			constraints {
-				// apply constraints here
-			}
-		}
 		
 		"/me" (controller: "user") {
 			action = [GET: "show"]
@@ -21,6 +16,10 @@ class UrlMappings {
 		
 		"/me/projects/$id/stages" (controller: "stage") {
 			action = [POST: "create", GET: "list"]
+		}
+		
+		"/me/projects/$id/runs" (controller: "run") {
+			action = [POST: "create"]
 		}
 		
 		"/me/projects/$id/stages/$stageId" (controller: "stage") {

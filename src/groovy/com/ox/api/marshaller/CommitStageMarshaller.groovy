@@ -9,7 +9,10 @@ class CommitStageMarshaller extends StageMarshaller{
 	@Override
 	def register() {
 		JSON.registerObjectMarshaller(CommitStage) { CommitStage stage ->;
-			return [id: stage.id, type: stage.type, gitInfo: stage.gitInfo]
+			return [id: stage.id, type: stage.type, 
+					url: stage.url, branch: stage.branch,
+					previous: stage.previous,
+					next: stage.next]
 		}
 	}
 	

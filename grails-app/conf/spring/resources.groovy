@@ -2,7 +2,6 @@ import com.ox.StageBuilder
 import com.ox.User;
 import com.ox.api.marshaller.CommitStageMarshaller
 import com.ox.api.marshaller.CustomMarshallers
-import com.ox.api.marshaller.GitInfoMarshaller;
 import com.ox.api.marshaller.ProjectMarshaller
 import com.ox.api.marshaller.UserMarshaller
 
@@ -15,8 +14,7 @@ beans = {
 		marshallers = [
 			ref('userMarshaller'),
 			ref('projectMarshaller'),
-			ref('commitStageMarshaller'),
-			ref('gitMarshaller')
+			ref('commitStageMarshaller')
 		]
 	}
 	
@@ -32,6 +30,4 @@ beans = {
 	commitStageMarshaller(CommitStageMarshaller){
 		grailsApplication = ref('grailsApplication')
 	}
-	
-	gitMarshaller(GitInfoMarshaller)
 }

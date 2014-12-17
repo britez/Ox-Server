@@ -5,7 +5,7 @@ class Project {
 	String name
 	String description
 	
-	static hasMany = [stages: Stage]
+	static hasMany = [stages: Stage, runs: Run]
 	static belongsTo = [owner: User]
 	
 	static mapping = {
