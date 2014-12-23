@@ -12,4 +12,8 @@ class Project {
 		table 'project'
 		stages joinTable: [name: 'project_stage', key: 'project_id', column: 'stage_id']
 	}
+	
+	Long runNumber(){
+		runs.size()
+	}
 }

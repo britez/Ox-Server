@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1.0">
+    <actions/>
+    <description></description>
+    <keepDependencies>false</keepDependencies>
+    <properties>
+        <com.synopsys.arc.jenkinsci.plugins.jobrestrictions.jobs.JobRestrictionProperty plugin="job-restrictions@0.3"/>
+    </properties>
+    <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@1.0">
+        <script>echo &apos;Hello world!&apos;
+				checkout changelog: true, 
+                poll: true, 
+                scm: [$class: &apos;GitSCM&apos;, 
+                       branches: [[name: &apos;*/dev&apos;]], 
+                       doGenerateSubmoduleConfigurations: false, 
+                       extensions: [], 
+                       submoduleCfg: [], 
+                       userRemoteConfigs: [[credentialsId: &apos;a07018ed-216c-4606-9568-957d97dd59a9&apos;,
+                        					url: &apos;https://github.com/mbritez/Ox-Server.git&apos;]]
+                     ]
+		</script>
+        <sandbox>false</sandbox>
+    </definition>
+    <triggers/>
+</flow-definition>

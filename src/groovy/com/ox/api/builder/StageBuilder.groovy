@@ -1,4 +1,9 @@
-package com.ox
+package com.ox.api.builder
+
+import com.ox.CommitStage;
+import com.ox.HerokuDeployStage;
+import com.ox.Stage;
+import com.ox.api.StageType;
 
 import grails.converters.JSON
 

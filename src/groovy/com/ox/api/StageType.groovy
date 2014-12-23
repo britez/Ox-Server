@@ -1,4 +1,4 @@
-package com.ox
+package com.ox.api
 
 class StageType {
 	public static final String COMMIT_STAGE = "commit-stage"

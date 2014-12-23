@@ -91,12 +91,16 @@ environments {
 		grails.serverURL = "http://localhost:8080/Ox-Server"
 		grails.oauth.base = "http://localhost:8090"
 		grails.oauth.context = "/Ox-Oauth"
+		grails.jenkins.base = "http://localhost:8888"
+		grails.jenkins.context = "/jenkins"
     }
     production {
         grails.logging.jul.usebridge = false
         grails.serverURL = "https://ox-server.herokuapp.com/"
 		grails.oauth.base = "https://ox-oauth.herokuapp.com/"
 		grails.oauth.context = ""
+		grails.jenkins.base = "http://localhost:8888"
+		grails.jenkins.context = "/jenkins"
     }
 }
 

@@ -2,6 +2,7 @@ package com.ox.api
 
 import grails.converters.JSON
 
+import com.ox.api.exception.JenkinsCommunicationException;
 import com.ox.api.exception.StageNotFoundException
 import com.ox.api.response.ResponseBody
 
@@ -26,6 +27,12 @@ class StageController extends ProjectController{
 	def stageNotFoundException(final StageNotFoundException e){
 		render(status:404, contentType:"application/json"){
 			new ResponseBody(message: "Stage with id: $e.id not found")
+		}
+	}
+	
+	def jenkinsCommunicationException(final JenkinsCommunicationException e){
+		render(status:500, contentType:"application/json"){
+			new ResponseBody(message: e.message)
 		}
 	}
 }

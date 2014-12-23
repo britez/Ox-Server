@@ -1,33 +1,38 @@
 package com.ox.api
 
-import com.ox.CommitStage;
-
 import grails.transaction.Transactional
 import groovyx.net.http.ContentType
 import groovyx.net.http.HTTPBuilder
-import groovyx.net.http.HttpResponseDecorator
 import groovyx.net.http.Method
+
+import com.ox.Stage
+import com.ox.api.exception.JenkinsCommunicationException
 
 @Transactional
 class JenkinsService {
 	
-	private static final String BASE_URL = "http://localhost:8888"
+	def jobBuilder
+	def grailsApplication
 	
-    def create(def stage){
-		def http = new HTTPBuilder(BASE_URL)
+	def create(Stage stage){
+		perform("${stage.owner.name}-${stage.type}",jobBuilder.build(stage))
+	}
+	
+    private perform(String name, String aBody){
+		def base = grailsApplication.config.grails.jenkins.base
+		def context = grailsApplication.config.grails.jenkins.context
+		def http = new HTTPBuilder(base)
 		http.request(Method.POST,ContentType.XML) {
-			uri.path = '/jenkins/createItem'
-			uri.query = [name:"$stage.name"]
-			body = '<project />'
-			headers.'Content-Type' = 'application/xml'
-			// response handler for a success response code:
-			response.success = { resp, json ->
-				println resp.status
-			}
-			// handler for any failure status code:
-			response.failure = { resp ->
-				println "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}"
-			}
-		}
+		 uri.path = "$context/createItem"
+		 uri.query = [name:"$name"]
+		 body = aBody
+		 headers.'Content-Type' = 'application/xml'
+		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
+	   }
+	}
+	
+	def String getSSHPub(){
+		URL uri = this.getClass().getClassLoader().getResource("/home/maxi/.ssh/id_rsa.pub")
+		new File(uri.getPath()).text
 	}
 }

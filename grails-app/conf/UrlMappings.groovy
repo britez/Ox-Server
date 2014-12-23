@@ -26,6 +26,6 @@ class UrlMappings {
 			action = [GET: "get"]
 		}
 		
-        "/"(view:"/index")
+		"/info" (controller: "info")
 	}
 }

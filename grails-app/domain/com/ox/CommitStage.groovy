@@ -1,5 +1,7 @@
 package com.ox
 
+import com.ox.api.StageType;
+
 class CommitStage extends Stage{
 	
 	String url

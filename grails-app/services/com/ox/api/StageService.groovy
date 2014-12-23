@@ -3,6 +3,7 @@ package com.ox.api
 import grails.transaction.Transactional
 
 import com.ox.Stage
+import com.ox.api.exception.JenkinsCommunicationException;
 import com.ox.api.exception.StageNotFoundException
 
 @Transactional
@@ -32,7 +33,7 @@ class StageService {
 		if(stage.previous){
 			setPrevious(project, stage.id, stage.previous)
 		}
-		//jenkinsService.create(stage)
+		jenkinsService.create(stage)
 		stage
 	}
 	
