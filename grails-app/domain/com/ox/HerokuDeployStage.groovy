@@ -5,8 +5,7 @@ import com.ox.api.StageType;
 class HerokuDeployStage extends Stage{
 
 	String url
-	String username
-	String password
+	String gitUrl
 	
 	static belongsTo = [owner: Project]
 	

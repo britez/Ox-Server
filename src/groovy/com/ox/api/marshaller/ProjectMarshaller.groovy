@@ -22,7 +22,7 @@ class ProjectMarshaller {
 					runs: String.format(runMarshaller.getListURL(), project.id),
 					statics: [
 						number: "# ${project.runNumber()}",
-						time: "5h 16s"
+						time: project.time
 						]
 					]
 		}

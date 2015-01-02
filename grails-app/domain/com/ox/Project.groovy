@@ -4,6 +4,7 @@ class Project {
 	
 	String name
 	String description
+	Long time
 	
 	static hasMany = [stages: Stage, runs: Run]
 	static belongsTo = [owner: User]
@@ -11,6 +12,11 @@ class Project {
 	static mapping = {
 		table 'project'
 		stages joinTable: [name: 'project_stage', key: 'project_id', column: 'stage_id']
+	}
+	
+	static constraints = {
+		name unique: true
+		time nullable: true, blank: true
 	}
 	
 	Long runNumber(){

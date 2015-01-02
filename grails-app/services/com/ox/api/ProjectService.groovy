@@ -9,7 +9,7 @@ import com.ox.api.exception.ProjectNotFoundException
 @Transactional
 class ProjectService {
 	
-	def jobService
+	def jenkinsService
 	
     def create(User user, def project) {
 		project.owner = user
@@ -17,11 +17,10 @@ class ProjectService {
 		if (!project.stages){
 			project.stages = []
 		}
-		//TODO: Implementar la creación en jenkins
-		//project.stages << this.jobService.createCommitStage(project)
 		if(!(project.save(flush:true))){
 			println project.errors
 		}
+		jenkinsService.create(project)
 		project
     }
 	
@@ -34,6 +33,7 @@ class ProjectService {
 		if(!result){
 			throw new ProjectNotFoundException(id:id)
 		}
+		jenkinsService.get(result)
 		result
 	}
 	
