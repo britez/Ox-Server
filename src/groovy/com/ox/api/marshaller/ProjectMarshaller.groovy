@@ -20,6 +20,7 @@ class ProjectMarshaller {
 					description: project.description,
 					stages: String.format(stageMarshaller.getListURL(),project.id),
 					runs: String.format(runMarshaller.getListURL(), project.id),
+					status: project.status,
 					statics: [
 						number: "# ${project.runNumber()}",
 						time: project.time

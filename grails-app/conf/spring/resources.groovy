@@ -1,6 +1,7 @@
 import com.ox.api.StageType
 import com.ox.api.builder.JobBuilder
 import com.ox.api.builder.StageBuilder
+import com.ox.api.builder.StatusBuilder
 import com.ox.api.builder.strategy.CommitStageBuilder
 import com.ox.api.builder.strategy.HerokuDeployStageBuilder
 import com.ox.api.builder.strategy.ProjectBuilder
@@ -14,9 +15,9 @@ import com.ox.api.marshaller.UserMarshaller
 // Place your Spring DSL code here
 beans = {
 	
-	
 	//Builder Strategies
 	stageBuilder(StageBuilder)
+	statusBuilder(StatusBuilder)
 	
 	def map = [:]
 	map.put(StageType.COMMIT_STAGE, ref('commitStageBuilder'))

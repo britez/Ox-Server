@@ -5,6 +5,7 @@ class Project {
 	String name
 	String description
 	Long time
+	String status
 	
 	static hasMany = [stages: Stage, runs: Run]
 	static belongsTo = [owner: User]
@@ -17,6 +18,7 @@ class Project {
 	static constraints = {
 		name unique: true
 		time nullable: true, blank: true
+		status nullable: true, blank: true
 	}
 	
 	Long runNumber(){

@@ -7,7 +7,7 @@
 	<definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@1.1">
 		<script>
 			node { 
-				git branch: 'dev', changelog: true, poll: true, url: ${stage.gitUrl}' 
+				git branch: 'dev', changelog: true, poll: true, url: '${stage.gitUrl}' 
 				def git = tool 'git'
 				<#noparse> 
 				sh "${git} fetch" 

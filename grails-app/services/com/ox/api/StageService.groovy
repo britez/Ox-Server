@@ -37,6 +37,11 @@ class StageService {
 		stage
 	}
 	
+	def delete(Stage stage){
+		jenkinsService.delete(stage)
+		stage.delete()
+	}
+	
 	private setPrevious(def project, def currentId, def previousId){
 		def previous = get(project.id, previousId)
 		previous.next << currentId

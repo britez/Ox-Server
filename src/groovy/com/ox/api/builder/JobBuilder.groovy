@@ -1,14 +1,8 @@
 package com.ox.api.builder
 
-import org.springframework.beans.factory.annotation.Autowired
-
 import com.ox.Project
 import com.ox.Stage
 import com.ox.api.StageType
-import com.ox.api.builder.strategy.CommitStageBuilder
-import com.ox.api.builder.strategy.JenkinsJobBuilder
-import com.ox.api.builder.strategy.ProjectBuilder
-import com.ox.api.builder.template.TemplateRepository
 
 class JobBuilder {
 	
