@@ -124,3 +124,6 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+
+cors.expose.headers = 'Location'
