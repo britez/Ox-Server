@@ -10,9 +10,9 @@ class TemplateRepository {
 	
 	TemplateRepository(){
 		this.cfg = new Configuration(Configuration.VERSION_2_3_21)
-		String url = this.getClass().getClassLoader().getResource("resources").getFile()
-		File dir = new File(url)
-		cfg.setDirectoryForTemplateLoading(dir)
+		//String url = this.getClass().getClassLoader().getResource("resources").getFile()
+		//File dir = new File(url)
+		//cfg.setDirectoryForTemplateLoading(dir)
 		cfg.setDefaultEncoding("UTF-8")
 		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER)
 	}
