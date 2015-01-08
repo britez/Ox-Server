@@ -99,8 +99,8 @@ environments {
         grails.serverURL = "https://ox-server.herokuapp.com/"
 		grails.oauth.base = "https://ox-oauth.herokuapp.com/"
 		grails.oauth.context = ""
-		grails.jenkins.base = "http://localhost:8888"
-		grails.jenkins.context = "/jenkins"
+		grails.jenkins.base = "http://ox-jenkins.herokuapp.com"
+		grails.jenkins.context = ""
     }
 }
 

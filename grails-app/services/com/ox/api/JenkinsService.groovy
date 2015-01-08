@@ -30,8 +30,9 @@ class JenkinsService {
 		def base = grailsApplication.config.grails.jenkins.base
 		def context = grailsApplication.config.grails.jenkins.context
 		def http = new HTTPBuilder(base)
+		String name = getId(project.name)
 		http.request(Method.GET,ContentType.JSON) {
-		 uri.path = "$context/job/${project.name}/lastBuild/api/json"
+		 uri.path = "$context/job/${name}/lastBuild/api/json"
 		 headers.'Content-Type' = 'application/json'
 		 response.success = { resp, json ->
 			 project.time = json.duration.toLong()
@@ -47,8 +48,9 @@ class JenkinsService {
 		def context = grailsApplication.config.grails.jenkins.context
 		def aBody = jobBuilder.build(project)
 		def http = new HTTPBuilder(base)
+		def name = getId(project.name)
 		http.request(Method.POST,ContentType.XML) {
-		 uri.path = "$context/job/${project.name}/build"
+		 uri.path = "$context/job/${name}/build"
 		 headers.'Content-Type' = 'application/xml'
 		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
 	   }
@@ -66,8 +68,9 @@ class JenkinsService {
 		def base = grailsApplication.config.grails.jenkins.base
 		def context = grailsApplication.config.grails.jenkins.context
 		def http = new HTTPBuilder(base)
+		def code = getId(name)
 		http.request(Method.POST,ContentType.XML) {
-		 uri.path = "$context/job/${name}/doDelete"
+		 uri.path = "$context/job/${code}/doDelete"
 		 headers.'Content-Type' = 'application/xml'
 		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
 	   }
@@ -78,8 +81,9 @@ class JenkinsService {
 		def context = grailsApplication.config.grails.jenkins.context
 		def aBody = jobBuilder.build(project)
 		def http = new HTTPBuilder(base)
+		def name = getId(project.name)
 		http.request(Method.POST,ContentType.XML) {
-		 uri.path = "$context/job/${project.name}/config.xml"
+		 uri.path = "$context/job/${name}/config.xml"
 		 body = aBody
 		 headers.'Content-Type' = 'application/xml'
 		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
@@ -89,14 +93,19 @@ class JenkinsService {
     private perform(String name, String aBody){
 		def base = grailsApplication.config.grails.jenkins.base
 		def context = grailsApplication.config.grails.jenkins.context
+		def code = getId(name)
 		def http = new HTTPBuilder(base)
 		http.request(Method.POST,ContentType.XML) {
 		 uri.path = "$context/createItem"
-		 uri.query = [name:"$name"]
+		 uri.query = [name:"$code"]
 		 body = aBody
 		 headers.'Content-Type' = 'application/xml'
 		 response.'404' = { resp -> throw new JenkinsBussinessException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") } 
 		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
 	   }
+	}
+	
+	private String getId(String name){
+		name.replace(" ","")
 	}
 }

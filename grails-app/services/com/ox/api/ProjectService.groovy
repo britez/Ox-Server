@@ -22,7 +22,7 @@ class ProjectService {
 		if(!(project.save(flush:true))){
 			println project.errors
 		}
-		//jenkinsService.create(project)
+		jenkinsService.create(project)
 		project
     }
 	
@@ -45,7 +45,7 @@ class ProjectService {
 		project.stages.each { stage ->
 			stageService.delete(stage)
 		}
-		//jenkinsService.delete(project)
+		jenkinsService.delete(project)
 		project.delete()
 	}
 }
