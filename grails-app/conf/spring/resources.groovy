@@ -19,6 +19,7 @@ beans = {
 	stageBuilder(StageBuilder)
 	statusBuilder(StatusBuilder)
 	
+	//Strategies map
 	def map = [:]
 	map.put(StageType.COMMIT_STAGE, ref('commitStageBuilder'))
 	map.put(StageType.HEROKU_DEPLOY_STAGE, ref('herokuDeployStageBuilder'))
@@ -40,7 +41,9 @@ beans = {
 		repository = ref('templateRepository')
 	}
 	
-	templateRepository(TemplateRepository)
+	templateRepository(TemplateRepository){
+		grailsResourceLocator = ref('grailsResourceLocator')
+	}
 	
 	//Marshallers
 	customMarshallers(CustomMarshallers) {

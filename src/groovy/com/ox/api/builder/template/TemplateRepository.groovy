@@ -11,10 +11,12 @@ class TemplateRepository {
 	
 	Configuration cfg
 	
+	def grailsResourceLocator
+	
 	TemplateRepository(){
 		this.cfg = new Configuration(Configuration.VERSION_2_3_21)
-		Resource resource = new ClassPathResource("resources") 
-		cfg.setDirectoryForTemplateLoading(resource.getFile())
+		Resource resource = new ClassPathResource("resources/commit-stage.ftl", getClass().classLoader)
+		cfg.setDirectoryForTemplateLoading(resource.getFile().getParentFile())
 		cfg.setDefaultEncoding("UTF-8")
 		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER)
 	}
