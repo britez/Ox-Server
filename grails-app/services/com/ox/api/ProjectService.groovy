@@ -14,6 +14,7 @@ class ProjectService {
 	def stageService
 	
     def create(User user, def project) {
+		log.info("Attemp to create a project")
 		project.owner = user
 		user.projects << project
 		if (!project.stages){
@@ -22,6 +23,8 @@ class ProjectService {
 		if(!(project.save(flush:true))){
 			println project.errors
 		}
+		log.info("Project created successfully")
+		log.info("Attemp to create projct into jenkins instance")
 		jenkinsService.create(project)
 		project
     }
