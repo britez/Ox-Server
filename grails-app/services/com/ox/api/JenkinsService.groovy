@@ -91,8 +91,11 @@ class JenkinsService {
 	}
 	
     private perform(String name, String aBody){
+		log.info("Attempt to create job: $name")
+		log.info("Attempt to create body: $aBody")
 		def base = grailsApplication.config.grails.jenkins.base
 		def context = grailsApplication.config.grails.jenkins.context
+		log.info("URL: $base$context/createItem")
 		def code = getId(name)
 		def http = new HTTPBuilder(base)
 		http.request(Method.POST,ContentType.XML) {
