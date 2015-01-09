@@ -8,6 +8,7 @@ import com.ox.api.builder.strategy.ProjectBuilder
 import com.ox.api.builder.template.TemplateRepository
 import com.ox.api.marshaller.CommitStageMarshaller
 import com.ox.api.marshaller.CustomMarshallers
+import com.ox.api.marshaller.HerokuDeployStageMarshaller
 import com.ox.api.marshaller.ProjectMarshaller
 import com.ox.api.marshaller.RunMarshaller
 import com.ox.api.marshaller.UserMarshaller
@@ -51,6 +52,7 @@ beans = {
 			ref('userMarshaller'),
 			ref('projectMarshaller'),
 			ref('commitStageMarshaller'),
+			ref('herokuDeployStageMarshaller'),
 			ref('runMarshaller')
 		]
 	}
@@ -66,6 +68,10 @@ beans = {
 	}
 	
 	commitStageMarshaller(CommitStageMarshaller){
+		grailsApplication = ref('grailsApplication')
+	}
+	
+	herokuDeployStageMarshaller(HerokuDeployStageMarshaller){
 		grailsApplication = ref('grailsApplication')
 	}
 	

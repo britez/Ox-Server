@@ -17,7 +17,7 @@ class CommitStageBuilder implements JenkinsJobBuilder<CommitStage> {
 	public String build(CommitStage stage) {
 		Map model = [:]
 		model.put("stage", stage)
-		model.put("grails", '${grails}')
+		model.put("workspace", stage.owner.getCode())
 		Writer out = new StringWriter() 
 		this.getXML().process(model, out)
 		out.toString()

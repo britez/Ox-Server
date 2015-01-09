@@ -12,4 +12,8 @@ class Stage {
 		previous nullable: true
 		next nullable: true
 	}
+	
+	String getCode(){
+		type.replaceAll(" ","")
+	}
 }

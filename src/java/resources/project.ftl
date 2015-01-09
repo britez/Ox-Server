@@ -7,8 +7,9 @@
 	<definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@1.1">
 		<script>
 			node {
+				sh "mkdir -p /home/Ox-Server/workspace/${workspace}"
 				<#list stages as stage> 
-				build '${project.name}-${stage.type}'
+				build '${project.getCode()}-${stage.getCode()}'
 				</#list> 
 			}
 		</script>

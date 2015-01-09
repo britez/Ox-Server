@@ -24,4 +24,8 @@ class Project {
 	Long runNumber(){
 		runs.size()
 	}
+	
+	String getCode(){
+		name.replaceAll(" ","")
+	}
 }

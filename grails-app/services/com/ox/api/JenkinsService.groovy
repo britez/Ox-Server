@@ -48,9 +48,8 @@ class JenkinsService {
 		def context = grailsApplication.config.grails.jenkins.context
 		def aBody = jobBuilder.build(project)
 		def http = new HTTPBuilder(base)
-		def name = getId(project.name)
 		http.request(Method.POST,ContentType.XML) {
-		 uri.path = "$context/job/${name}/build"
+		 uri.path = "$context/job/${project.getCode()}/build"
 		 headers.'Content-Type' = 'application/xml'
 		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
 	   }
