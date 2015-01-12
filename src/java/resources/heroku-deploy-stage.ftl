@@ -7,20 +7,21 @@
 	<definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@1.1">
 		<script>
 			node { 
-				git branch: 'dev', changelog: true, poll: true, url: '${stage.gitUrl}' 
-				def git = tool 'git'
-				<#noparse> 
-				sh "${git} fetch" 
-				try { 
-					sh "${git} </#noparse>remote add heroku ${stage.url}"
-				} catch(def ex) { 
-					//ex 
+			    dir('${workspace}'){
+					def git = tool 'git'
+					<#noparse>
+					sh "${git} init"
+					try { 
+						sh "${git} </#noparse>remote add heroku ${stage.url}"
+					} catch(def ex) { 
+						//ex 
+					} 
+					<#noparse>
+					sh "${git} checkout master" 
+					sh "${git} merge origin/dev" 
+					sh "${git} push heroku master"
+					</#noparse>
 				} 
-				<#noparse>
-				sh "${git} checkout master" 
-				sh "${git} merge origin/dev" 
-				sh "${git} push heroku master"
-				</#noparse> 
 			}
 		</script>
 		<sandbox>false</sandbox>

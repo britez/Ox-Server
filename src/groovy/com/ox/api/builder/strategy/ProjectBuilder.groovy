@@ -18,7 +18,7 @@ class ProjectBuilder implements JenkinsJobBuilder<Project> {
 		Map model = [:]
 		model.put("project", project)
 		model.put("stages",project.stages)
-		model.put("workspace", project.getCode())
+		model.put("workspace", "/home/Ox-Server/workspace/${project.getCode()}")
 		Writer out = new StringWriter()
 		this.getXML().process(model, out)
 		out.toString()

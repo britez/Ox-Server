@@ -6,12 +6,14 @@
 	<properties/>
 	<definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@1.1">
 		<script>
-			dir('/home/Ox-Server/${workspace}'){
-				git branch: '${stage.branch}', changelog: true, poll: true, url: '${stage.url}' 
-				def grails = tool 'grails'
-				<#noparse> 
-				sh "${grails}/bin/grails test-app"
-				</#noparse>
+			node{
+				dir ('${workspace}'){
+					git branch: 'dev', changelog: true, poll: true, url: '${stage.url}' 
+					def grails = tool 'grails'
+					<#noparse> 
+				    sh "${grails}/bin/grails test-app"
+				    </#noparse>
+				}
 			}
 		</script>
 	<sandbox>false</sandbox>

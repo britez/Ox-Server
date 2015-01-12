@@ -15,7 +15,7 @@ class HerokuDeployStageBuilder implements JenkinsJobBuilder<HerokuDeployStage> {
 	public String build(HerokuDeployStage stage) {
 		Map model = [:]
 		model.put("stage",stage)
-		model.put("workspace", stage.owner.getCode())
+		model.put("workspace", "/home/Ox-Server/workspace/${stage.owner.getCode()}")
 		Writer out = new StringWriter()
 		this.getXML().process(model, out)
 		out.toString()
