@@ -3,6 +3,7 @@ package com.ox.api
 import grails.converters.JSON
 
 import com.ox.Project
+import com.ox.api.exception.BadRequestException
 import com.ox.api.exception.JenkinsBussinessException
 import com.ox.api.exception.JenkinsCommunicationException
 import com.ox.api.exception.ProjectNotFoundException
@@ -42,6 +43,12 @@ class ProjectController extends UserController{
 	def jenkinsBussinessException(final JenkinsBussinessException e){
 		render(status:400, contentType:"application/json"){
 			new ResponseBody(message: e.message)
+		}
+	}
+	
+	def badRequestException(final BadRequestException e){
+		render(status:400, contentType:"application/json"){
+			new ResponseBody(message: "The body sent is not valid")
 		}
 	}
 	

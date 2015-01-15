@@ -4,7 +4,7 @@ import grails.transaction.Transactional
 
 import com.ox.Project
 import com.ox.User
-import com.ox.api.exception.JenkinsCommunicationException
+import com.ox.api.exception.BadRequestException
 import com.ox.api.exception.ProjectNotFoundException
 
 @Transactional
@@ -21,7 +21,7 @@ class ProjectService {
 			project.stages = []
 		}
 		if(!(project.save(flush:true))){
-			println project.errors
+			throw new BadRequestException()
 		}
 		log.info("Project created successfully")
 		log.info("Attemp to create projct into jenkins instance")
