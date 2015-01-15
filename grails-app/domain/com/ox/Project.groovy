@@ -6,8 +6,11 @@ class Project {
 	String description
 	Long time
 	String status
+	Long started
+	Long estimatedTime
+	Long number
 	
-	static hasMany = [stages: Stage, runs: Run]
+	static hasMany = [stages: Stage]
 	static belongsTo = [owner: User]
 	
 	static mapping = {
@@ -19,10 +22,9 @@ class Project {
 		name unique: true
 		time nullable: true, blank: true
 		status nullable: true, blank: true
-	}
-	
-	Long runNumber(){
-		runs.size()
+		started nullable: true, blank: true
+		estimatedTime nullable: true, blank: true
+		number nullable:true, blank: true
 	}
 	
 	String getCode(){

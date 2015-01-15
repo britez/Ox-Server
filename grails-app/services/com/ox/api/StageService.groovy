@@ -13,6 +13,11 @@ class StageService {
 	
 	def list(def projectId){
 		def result = Stage.executeQuery("from Stage as stage where stage.owner.id = $projectId")
+		result.each { it ->
+			if (it.owner.runNumber() != 0){
+				jenkinsService.get(it)
+			}
+		}
 		result
 	}
 	
@@ -20,6 +25,9 @@ class StageService {
 		def stage = Stage.executeQuery("from Stage as stage where stage.id = $id and stage.owner.id = $projectId")[0]
 		if (stage == null){
 			throw new StageNotFoundException(id: id)
+		}
+		if (stage.owner.number && stage.owner.number != 0){
+			jenkinsService.get(stage)
 		}
 		stage
 	}

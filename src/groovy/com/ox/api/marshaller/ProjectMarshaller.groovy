@@ -3,7 +3,7 @@ package com.ox.api.marshaller
 import grails.converters.JSON
 
 import com.ox.Project
-import com.ox.User
+import com.ox.api.StatusType
 
 class ProjectMarshaller {
 	
@@ -11,21 +11,29 @@ class ProjectMarshaller {
 	
 	def grailsApplication
 	def stageMarshaller
-	def runMarshaller
-	
+
 	def register() {
 		JSON.registerObjectMarshaller(Project) { Project project ->;
-			return [id: project.id, 
-					name: project.name,	
-					description: project.description,
-					stages: String.format(stageMarshaller.getListURL(),project.id),
-					runs: String.format(runMarshaller.getListURL(), project.id),
-					status: project.status,
-					statics: [
-						number: "# ${project.runNumber()}",
-						time: project.time
-						]
-					]
+			Map result = [:]
+			result.put('id',project.id)
+			result.put('name',project.name)
+			result.put('description',project.description)
+			result.put('stages',String.format(stageMarshaller.getListURL(),project.id))
+			result.put('status', project.status)
+			
+			Map statics = [:]
+			statics.put('number',"# ${project.number?project.number:0}")
+			if (StatusType.BUILDING.equals(project.status)){
+				def time = new Date().getTime() - project.started
+				Double progress = (time*100/project.estimatedTime)
+				statics.put('time', time)
+				statics.put('progress', progress<100?progress.round(2):100)
+			}else{
+				statics.put('time',project.time?project.time:0)
+				statics.put('progress', 100)
+			}
+			result.put('statics',statics)
+			result
 		}
 	}
 	

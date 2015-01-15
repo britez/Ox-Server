@@ -12,8 +12,5 @@ class RunService {
 
     def create(Project project) {
 		jenkinsService.run(project)
-		Run run = new Run(owner:project)
-		project.runs << run
-		project.save()
     }
 }

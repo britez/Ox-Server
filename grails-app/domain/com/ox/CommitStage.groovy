@@ -13,4 +13,6 @@ class CommitStage extends Stage{
 	String getType(){
 		StageType.COMMIT_STAGE
 	}
+	
+	static c
 }

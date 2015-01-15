@@ -13,7 +13,10 @@ class HerokuDeployStageMarshaller extends StageMarshaller{
 			return [id: stage.id, type: stage.type, 
 					url: stage.url,
 					previous: stage.previous,
-					next: stage.next]
+					next: stage.next,
+					statics: stage.status,
+					time: stage.time
+					]
 		}
 	}
 	

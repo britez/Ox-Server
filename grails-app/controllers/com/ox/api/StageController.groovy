@@ -15,7 +15,7 @@ class StageController extends ProjectController{
 	
 	def create(Long id){
 		def stage = stageService.create(getProject(getUser().id, id), stageBuilder.create(request))
-		response.setHeader("Location","$grailsApplication.config.grails.serverURL/me/project/${id}/stages/$stage.id")
+		response.setHeader("Location","$grailsApplication.config.grails.serverURL/me/projects/${id}/stages/$stage.id")
 		render (status: 201)
 	}
 	

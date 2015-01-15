@@ -10,7 +10,6 @@ import com.ox.api.marshaller.CommitStageMarshaller
 import com.ox.api.marshaller.CustomMarshallers
 import com.ox.api.marshaller.HerokuDeployStageMarshaller
 import com.ox.api.marshaller.ProjectMarshaller
-import com.ox.api.marshaller.RunMarshaller
 import com.ox.api.marshaller.UserMarshaller
 
 // Place your Spring DSL code here
@@ -53,7 +52,6 @@ beans = {
 			ref('projectMarshaller'),
 			ref('commitStageMarshaller'),
 			ref('herokuDeployStageMarshaller'),
-			ref('runMarshaller')
 		]
 	}
 	
@@ -64,7 +62,6 @@ beans = {
 	projectMarshaller(ProjectMarshaller){
 		grailsApplication = ref('grailsApplication')
 		stageMarshaller = ref('commitStageMarshaller')
-		runMarshaller = ref('runMarshaller')
 	}
 	
 	commitStageMarshaller(CommitStageMarshaller){
@@ -72,10 +69,6 @@ beans = {
 	}
 	
 	herokuDeployStageMarshaller(HerokuDeployStageMarshaller){
-		grailsApplication = ref('grailsApplication')
-	}
-	
-	runMarshaller(RunMarshaller){
 		grailsApplication = ref('grailsApplication')
 	}
 }

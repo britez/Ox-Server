@@ -38,7 +38,7 @@ class ProjectService {
 		if(!result){
 			throw new ProjectNotFoundException(id:id)
 		}
-		if (result.runNumber() != 0){
+		if (result.number && result.number != 0){
 			jenkinsService.get(result)
 		}
 		result

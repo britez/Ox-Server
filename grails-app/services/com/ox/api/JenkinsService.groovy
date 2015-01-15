@@ -27,17 +27,35 @@ class JenkinsService {
 	}
 	
 	def get(Project project){
+		log.info("Getting info from jenkins")
+		def json = performGet(project.getCode())
+		project.time = json.duration.toLong()
+		project.status = statusBuilder.getStatus(json)
+		project.estimatedTime = json.estimatedDuration.toLong()
+		project.started = json.timestamp.toLong()
+		project.number = json.number.toLong() 
+		project.save()
+	}
+	
+	def get(Stage stage){
+		def json = performGet("${stage.owner.getCode()}-${stage.getCode()}")
+		stage.time = json.duration.toLong()
+		stage.status = statusBuilder.getStatus(json)
+		stage.estimatedTime = json.estimatedDuration.toLong()
+		stage.started = json.timestamp.toLong()
+		stage.number = json.number.toLong()
+		stage.save()
+	}
+	
+	private def performGet(String id){
 		def base = grailsApplication.config.grails.jenkins.base
 		def context = grailsApplication.config.grails.jenkins.context
 		def http = new HTTPBuilder(base)
-		String name = getId(project.name)
 		http.request(Method.GET,ContentType.JSON) {
-		 uri.path = "$context/job/${name}/lastBuild/api/json"
+		 uri.path = "$context/job/${id}/lastBuild/api/json"
 		 headers.'Content-Type' = 'application/json'
 		 response.success = { resp, json ->
-			 project.time = json.duration.toLong()
-			 project.status = statusBuilder.getStatus(json) 
-			 project.save()
+			 return json
 		 }
 		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
 	   }
@@ -51,6 +69,13 @@ class JenkinsService {
 		http.request(Method.POST,ContentType.XML) {
 		 uri.path = "$context/job/${project.getCode()}/build"
 		 headers.'Content-Type' = 'application/xml'
+		 response.success = { 
+			 get(project) 
+			 if (project.number) {
+				 project.number = 1
+				 project.save()
+			 } 
+		 }
 		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
 	   }
 	}
