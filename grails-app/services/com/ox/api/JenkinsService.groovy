@@ -47,6 +47,20 @@ class JenkinsService {
 		stage.save()
 	}
 	
+	def hasBuilds(String id){
+		def base = grailsApplication.config.grails.jenkins.base
+		def context = grailsApplication.config.grails.jenkins.context
+		def http = new HTTPBuilder(base)
+		http.request(Method.GET,ContentType.JSON) {
+		 uri.path = "$context/job/${id}/api/json"
+		 headers.'Content-Type' = 'application/json'
+		 response.success = { resp, json ->
+			 return json.builds.size() != 0
+		 }
+		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
+	   }
+	}
+	
 	private def performGet(String id){
 		def base = grailsApplication.config.grails.jenkins.base
 		def context = grailsApplication.config.grails.jenkins.context
@@ -69,13 +83,6 @@ class JenkinsService {
 		http.request(Method.POST,ContentType.XML) {
 		 uri.path = "$context/job/${project.getCode()}/build"
 		 headers.'Content-Type' = 'application/xml'
-		 response.success = { 
-			 get(project) 
-			 if (project.number) {
-				 project.number = 1
-				 project.save()
-			 } 
-		 }
 		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
 	   }
 	}

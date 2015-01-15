@@ -12,5 +12,8 @@ class RunService {
 
     def create(Project project) {
 		jenkinsService.run(project)
+		if(jenkinsService.hasBuilds(project.getCode())){
+			jenkinsService.get(project)
+		}
     }
 }
