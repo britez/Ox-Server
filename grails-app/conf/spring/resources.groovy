@@ -31,6 +31,7 @@ beans = {
 	
 	commitStageBuilder(CommitStageBuilder){
 		repository = ref('templateRepository')
+		stageService = ref('stageService')
 	}
 	
 	herokuDeployStageBuilder(HerokuDeployStageBuilder){

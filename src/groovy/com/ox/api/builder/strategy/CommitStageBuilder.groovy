@@ -1,8 +1,7 @@
 package com.ox.api.builder.strategy
 
-import org.springframework.beans.factory.annotation.Autowired
-
 import com.ox.CommitStage
+import com.ox.api.StageService
 import com.ox.api.builder.template.TemplateRepository
 
 import freemarker.template.Template
@@ -12,6 +11,7 @@ class CommitStageBuilder implements JenkinsJobBuilder<CommitStage> {
 	static final String COMMIT_STAGE = "commit-stage.ftl"
 	
 	TemplateRepository repository
+	StageService stageService 
 	
 	@Override
 	public String build(CommitStage stage) {

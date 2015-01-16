@@ -19,7 +19,7 @@ class JenkinsService {
 	
 	def create(Stage stage){
 		perform("${stage.owner.name}-${stage.type}",jobBuilder.build(stage))
-		update(stage.owner)
+		updateProject(stage.owner)
 	}
 	
 	def create(Project project){
@@ -107,7 +107,7 @@ class JenkinsService {
 	   }
 	}
 	
-	private update(Project project){
+	private updateProject(Project project){
 		def base = grailsApplication.config.grails.jenkins.base
 		def context = grailsApplication.config.grails.jenkins.context
 		def aBody = jobBuilder.build(project)

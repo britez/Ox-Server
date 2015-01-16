@@ -26,7 +26,7 @@ class StageService {
 		if (stage == null){
 			throw new StageNotFoundException(id: id)
 		}
-		if (jenkinsService.hasBuilds(stage.getCode())){
+		if (jenkinsService.hasBuilds("${stage.owner.getCode()}-${stage.getCode()}")){
 			jenkinsService.get(stage)
 		}
 		stage
@@ -38,10 +38,10 @@ class StageService {
 		if(!stage.save()){
 			println stage.errors
 		}
+		jenkinsService.create(stage)
 		if(stage.previous){
 			setPrevious(project, stage.id, stage.previous)
 		}
-		jenkinsService.create(stage)
 		stage
 	}
 	
@@ -54,5 +54,6 @@ class StageService {
 		def previous = get(project.id, previousId)
 		previous.next << currentId
 		previous.save(flush:true)
+		jenkinsService.updateProject(project)
 	}
 }
