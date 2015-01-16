@@ -47,7 +47,9 @@ class StageService {
 	
 	def delete(Stage stage){
 		jenkinsService.delete(stage)
+		stage.owner.remove(stage)
 		stage.delete()
+		jenkinsService.updateProject(stage.owner)
 	}
 	
 	private setPrevious(def project, def currentId, def previousId){

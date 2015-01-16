@@ -95,19 +95,7 @@ class JenkinsService {
 		performDelete("${stage.owner.name}-${stage.type}")
 	}
 	
-	private performDelete(String name){
-		def base = grailsApplication.config.grails.jenkins.base
-		def context = grailsApplication.config.grails.jenkins.context
-		def http = new HTTPBuilder(base)
-		def code = getId(name)
-		http.request(Method.POST,ContentType.XML) {
-		 uri.path = "$context/job/${code}/doDelete"
-		 headers.'Content-Type' = 'application/xml'
-		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
-	   }
-	}
-	
-	private updateProject(Project project){
+	def updateProject(Project project){
 		def base = grailsApplication.config.grails.jenkins.base
 		def context = grailsApplication.config.grails.jenkins.context
 		def aBody = jobBuilder.build(project)
@@ -116,6 +104,18 @@ class JenkinsService {
 		http.request(Method.POST,ContentType.XML) {
 		 uri.path = "$context/job/${name}/config.xml"
 		 body = aBody
+		 headers.'Content-Type' = 'application/xml'
+		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
+	   }
+	}
+	
+	private performDelete(String name){
+		def base = grailsApplication.config.grails.jenkins.base
+		def context = grailsApplication.config.grails.jenkins.context
+		def http = new HTTPBuilder(base)
+		def code = getId(name)
+		http.request(Method.POST,ContentType.XML) {
+		 uri.path = "$context/job/${code}/doDelete"
 		 headers.'Content-Type' = 'application/xml'
 		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
 	   }

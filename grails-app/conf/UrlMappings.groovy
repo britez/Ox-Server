@@ -18,12 +18,12 @@ class UrlMappings {
 			action = [POST: "create", GET: "list"]
 		}
 		
-		"/me/projects/$id/runs" (controller: "run") {
-			action = [POST: "create"]
+		"/me/projects/$id/stages/$stageId" (controller: "stage") {
+			action = [GET: "get", DELETE:"delete"]
 		}
 		
-		"/me/projects/$id/stages/$stageId" (controller: "stage") {
-			action = [GET: "get"]
+		"/me/projects/$id/runs" (controller: "run") {
+			action = [POST: "create"]
 		}
 		
 		"/info" (controller: "info")

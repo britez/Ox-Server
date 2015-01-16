@@ -20,8 +20,12 @@ class StageController extends ProjectController{
 	}
 	
 	def get(Long id, Long stageId){
-		def result = stageService.get(getProject(getUser().id, id).id, stageId)
-		render result as JSON
+		render stageService.get(getProject(getUser().id, id).id, stageId) as JSON
+	}
+	
+	def delete(Long id, Long stageId){
+		stageService.delete(stageService.get(getProject(getUser().id, id).id, stageId))
+		render(status:204)
 	}
 	
 	def stageNotFoundException(final StageNotFoundException e){

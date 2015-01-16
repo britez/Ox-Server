@@ -30,4 +30,14 @@ class Project {
 	String getCode(){
 		name.replaceAll(" ","")
 	}
+	
+	void remove(Stage stage){
+		def it = stages.iterator()
+		while (it.hasNext()) {
+			if (it.next().equals(stage)) {
+				it.remove()
+				break
+			}
+		}
+	}
 }
