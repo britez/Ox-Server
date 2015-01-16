@@ -14,7 +14,7 @@ class StageService {
 	def list(def projectId){
 		def result = Stage.executeQuery("from Stage as stage where stage.owner.id = $projectId")
 		result.each { it ->
-			if (jenkinsService.hasBuilds(it.getCode())){
+			if (jenkinsService.hasBuilds("${it.owner.getCode()}-${it.getCode()}")){
 				jenkinsService.get(it)
 			}
 		}
