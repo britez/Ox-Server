@@ -28,6 +28,12 @@ class StageController extends ProjectController{
 		render(status:204)
 	}
 	
+	def update(Long id, Long stageId){
+		def stage = stageBuilder.create(request)
+		stage.id = stageId
+		render stageService.update(getProject(getUser().id, id), stage) as JSON
+	}
+	
 	def stageNotFoundException(final StageNotFoundException e){
 		render(status:404, contentType:"application/json"){
 			new ResponseBody(message: "Stage with id: $e.id not found")

@@ -19,13 +19,13 @@ class UrlMappings {
 		}
 		
 		"/me/projects/$id/stages/$stageId" (controller: "stage") {
-			action = [GET: "get", DELETE:"delete"]
+			action = [GET: "get", DELETE:"delete", PUT:"update"]
 		}
 		
 		"/me/projects/$id/runs" (controller: "run") {
 			action = [POST: "create"]
 		}
 		
-		"/info" (controller: "info")
+		"/" (view: "index")
 	}
 }

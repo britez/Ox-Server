@@ -45,6 +45,14 @@ class StageService {
 		stage
 	}
 	
+	def update(def project, def stage){
+		def master = get(project.id, stage.id)
+		master.merge(stage)
+		master.save()
+		jenkinsService.updateStage(master)
+		master
+	}
+	
 	def delete(Stage stage){
 		jenkinsService.delete(stage)
 		stage.owner.remove(stage)

@@ -14,5 +14,8 @@ class CommitStage extends Stage{
 		StageType.COMMIT_STAGE
 	}
 	
-	static c
+	void merge(CommitStage stage){
+		this.url = stage.url
+		this.branch = stage.branch
+	}
 }

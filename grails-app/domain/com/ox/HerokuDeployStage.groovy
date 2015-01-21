@@ -11,4 +11,8 @@ class HerokuDeployStage extends Stage{
 	String getType(){
 		StageType.HEROKU_DEPLOY_STAGE
 	}
+	
+	void merge(HerokuDeployStage stage){
+		this.url = stage.url
+	}
 }

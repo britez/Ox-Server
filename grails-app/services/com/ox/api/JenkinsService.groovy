@@ -61,20 +61,6 @@ class JenkinsService {
 	   }
 	}
 	
-	private def performGet(String id){
-		def base = grailsApplication.config.grails.jenkins.base
-		def context = grailsApplication.config.grails.jenkins.context
-		def http = new HTTPBuilder(base)
-		http.request(Method.GET,ContentType.JSON) {
-		 uri.path = "$context/job/${id}/lastBuild/api/json"
-		 headers.'Content-Type' = 'application/json'
-		 response.success = { resp, json ->
-			 return json
-		 }
-		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
-	   }
-	}
-	
 	def run(Project project){
 		def base = grailsApplication.config.grails.jenkins.base
 		def context = grailsApplication.config.grails.jenkins.context
@@ -105,6 +91,35 @@ class JenkinsService {
 		 uri.path = "$context/job/${name}/config.xml"
 		 body = aBody
 		 headers.'Content-Type' = 'application/xml'
+		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
+	   }
+	}
+	
+	def updateStage(Stage stage){
+		def base = grailsApplication.config.grails.jenkins.base
+		def context = grailsApplication.config.grails.jenkins.context
+		def aBody = jobBuilder.build(stage)
+		log.info(aBody)
+		def http = new HTTPBuilder(base)
+		def name = "${stage.owner.getCode()}-${stage.getCode()}"
+		http.request(Method.POST,ContentType.XML) {
+		 uri.path = "$context/job/${name}/config.xml"
+		 body = aBody
+		 headers.'Content-Type' = 'application/xml'
+		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
+	   }
+	}
+	
+	private def performGet(String id){
+		def base = grailsApplication.config.grails.jenkins.base
+		def context = grailsApplication.config.grails.jenkins.context
+		def http = new HTTPBuilder(base)
+		http.request(Method.GET,ContentType.JSON) {
+		 uri.path = "$context/job/${id}/lastBuild/api/json"
+		 headers.'Content-Type' = 'application/json'
+		 response.success = { resp, json ->
+			 return json
+		 }
 		 response.failure = { resp -> throw new JenkinsCommunicationException(message: "Unexpected error: ${resp.status} : ${resp.statusLine.reasonPhrase}") }
 	   }
 	}
